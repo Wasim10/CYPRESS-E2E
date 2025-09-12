@@ -1,0 +1,10 @@
+{
+  "firstName": "test",
+  "lastName": "user",
+  "email": "test.user@example.com",
+  "telephone": "1234567890",
+  "password": "Password123",
+ "passwordConfirm": "Password123",
+  "policyCheckbox": true,
+  "continue": true
+}

@@ -1,0 +1,22 @@
+{
+  "name": "cypress-e2e",
+  "version": "1.0.0",
+  "description": "E2E Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wasim10/CYPRESS-E2E.git"
+  },
+  "author": "Wasim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wasim10/CYPRESS-E2E/issues"
+  },
+  "homepage": "https://github.com/Wasim10/CYPRESS-E2E#readme",
+  "devDependencies": {
+    "cypress": "^15.2.0"
+  }
+}

@@ -1,0 +1,167 @@
+Following -> https://www.youtube.com/watch?v=y8wiSB7VuEE&list=PLUPlX-9QUIrMZsnv69WfCiF15PJUV84Gj&index=2
+
+First create repo on github.
+second clone it using gitbash.
+
+Muhammad Usama@Waseem-Automation MINGW64 ~/desktop
+$ git clone https://github.com/Wasim10/CYPRESS-E2E.git
+
+Third open that in vs code.
+
+Forth open terminal and install CYPRESS.
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> npm init
+
+Then
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> npm install cypress --save-dev 
+
+Open cypress
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> npx cypress open
+
+---------------------------------------------------------------
+Now POM Page object Model works Start
+
+1. create a folder name 'pages' in main cypress-E2E
+2. create a folder name 'tests' in the e2e folder
+
+will automate this site https://naveenautomationlabs.com/opencart/
+
+3. create a file name 'registerpage.js' in the pages folder
+add locators there check file for details
+class registerPage{
+     // define all the locators there in weblocators object
+    weblocators={
+       
+        firstName:'#input-firstname',
+        lastName:'#input-lastname',
+        email:'input-email',
+        telephone:'#input-telephone',
+        password:'#input-password',
+        passwordConfirm:'#input-confirm',
+        policyCheckbox:'input[type="checkbox"]',
+        continue:'.btn.btn-primary'
+
+    }
+
+      // enter first naem method
+
+   // we are getting URl from e2e file , env 
+      OpenUrl(){
+        cy.visit(Cypress.env('URL'))
+      }
+
+      enterFirstName(FName) {
+    cy.get(this.weblocators.firstName).type(FName)
+}
+
+enterLastName(LName) {
+    cy.get(this.weblocators.lastName).type(LName)
+}
+
+enterEmail(Email) {
+    cy.get(this.weblocators.email).type(Email)
+}
+
+enterTelephone(Telephone) {
+    cy.get(this.weblocators.telephone).type(Telephone)
+}
+
+enterPassword(Password) {
+    cy.get(this.weblocators.password).type(Password)
+}
+
+enterPasswordConfirm(ConfirmPassword) {
+    cy.get(this.weblocators.passwordConfirm).type(ConfirmPassword)
+}
+
+checkPolicy() {
+    cy.get(this.weblocators.policyCheckbox).check()
+}
+
+clickContinue() {
+    cy.get(this.weblocators.continue).click()
+}
+
+  
+
+}
+
+
+4. Goto cypress.config.js to creat a env variable
+add this under e2e brackets 
+  env:{
+    URL: 'https://naveenautomationlabs.com/opencart/'
+  }
+
+use that env Url in out registerPage to visit site
+// we are getting URl from e2e file , env 
+      OpenUrl(){
+        cy.visit(Cypress.env('URL'))
+      }
+
+
+5. Create a file name 'registerTest.cy.js' inside the e2e/tests folder
+
+To Import registerPage.js file in our registerTest.cy.js,
+use export keyword 
+e.g
+export class registerPage(){
+
+}
+
+now goto registerTest.cy.js add below
+import  {registerPage} from "../../pages/registerPage"
+
+
+const registerObj = new registerPage()
+
+describe('test automation' , ()=>{
+    it('register flow',()=>{
+        registerObj.openURL()
+        registerObj.firstName( we will get the firstName and fields data from fixtures)
+
+
+    })
+})
+
+Goto -> fixtures  and creat file with name registerData.json
+
+
+define all with values like that
+{
+  "firstName": "test",
+  "lastName": "user",
+  "email": "test.user@example.com",
+  "telephone": "1234567890",
+  "password": "Password123",
+  "passwordConfirm": "Password123",
+  "policyCheckbox": true,
+  "continue": true
+}
+
+
+Next go back registerTest.cy.js and use above values
+
+describe('test automation', () => {
+    it('register flow', () => {
+        registerObj.openURL()
+        registerObj.enterFirstName(registerData.firstName)
+        registerObj.enterLastName(registerData.lastName)
+        registerObj.enterEmail(registerData.email)
+        registerObj.enterTelephone(registerData.telephone)
+        registerObj.enterPassword(registerData.password)
+        registerObj.enterPasswordConfirm(registerData.passwordConfirm)
+        registerObj.checkPolicy()
+        registerObj.clickContinue()
+    })
+})
+
+
+Run commad npx cypress open 
+and check the above flow is working or not
+
+its working
+through this way we can do multiple features testing using POM
+
+Now Push code to github
+git status
+git add .
