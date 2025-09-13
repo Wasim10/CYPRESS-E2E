@@ -1,4 +1,7 @@
-Following -> https://www.youtube.com/watch?v=y8wiSB7VuEE&list=PLUPlX-9QUIrMZsnv69WfCiF15PJUV84Gj&index=2
+Following -> 
+First video
+
+https://www.youtube.com/watch?v=y8wiSB7VuEE&list=PLUPlX-9QUIrMZsnv69WfCiF15PJUV84Gj&index=2
 
 First create repo on github.
 second clone it using gitbash.
@@ -165,3 +168,268 @@ through this way we can do multiple features testing using POM
 Now Push code to github
 git status
 git add .
+git commit -m "test E2E Cypress"
+git push
+
+
+Code pushed successfully .
+
+===================================================================
+
+
+Second video
+
+https://www.youtube.com/watch?v=EqDIbK0mmhE&list=PLUPlX-9QUIrMZsnv69WfCiF15PJUV84Gj&index=3
+
+Start from this video
+
+In this video we will cover 
+1. commands.js, Add to cart flow
+2. Run test case in headless Model
+3. Run test case using script
+4. Generate HTML report, Mochawsome
+
+1) Goto commands.js inside the support folder.
+commands.js is used to define custom reusable commands
+
+Goto commands.js inside the Support folder
+Make a custom command 
+
+I have added the login custom command
+Cypress.Commands.add('login', (email,passowrd)=>{
+  //  cy.visit('')
+    cy.visit(Cypress.env('LoginURL'))
+    cy.get('#input-email').type(email)
+    cy.get('#input-password').type(passowrd)
+    cy.get('input.btn.btn-primary').click()
+})
+
+2) Create a new page inside pages with name homePage.js and add the following code 
+
+export class homePage {
+
+
+    weblocators = {
+
+        search_input: '.form-control.input-lg',
+        click_search: '.btn.btn-default.btn-lg',
+        product: 'img[title="MacBook"]',
+        addtocart: 'Add to Cart',
+        successMessages: 'div.alert.alert-success.alert-dismissible'
+
+
+    }
+
+    searchProduct(productName) {
+        cy.get(this.weblocators.search_input).type(productName)
+        cy.get(this.weblocators.click_search).click()
+    }
+    addToCart() {
+        cy.contains(this.weblocators.addtocart).first().click()
+    }
+
+    verifySucessMessage() {
+        return cy.get(this.weblocators.successMessages)
+    }
+
+}
+
+3) Next create a addToCartTest.cy.js file inside the e2e/tests
+
+add the following code
+
+import { homePage } from "../../pages/homePage"
+const homePageObj = new homePage()
+import testData from '../../fixtures/testData.json'
+
+
+describe(' test automation', () => {
+    before(() => {
+        cy.login(testData.login.username, testData.login.password)
+    })
+
+
+    it('Add To Cart flow', () => {
+        homePageObj.searchProduct(testData.product.productName)
+        homePageObj.addToCart()
+        homePageObj.verifySucessMessage().should('contain', testData.message.successMessage).and('contain', testData.product.productName);
+    })
+
+    after(() => {
+        cy.captureConsoleLogs();
+
+    })
+})
+
+4) Goto fixtures folder and create a file 'testData.json' for data and paste this
+
+{
+  "login": 
+  {
+    "username": "test.qa@dispostable.com",
+    "password": "Cypress123!!"
+  },
+  "product": 
+  {
+    "productName": "MacBook"
+  },
+  "message":
+  {
+    "successMessage": "Success: You have added MacBook to your shopping cart!"
+  }
+  
+}
+
+5) Run the test and check
+add this
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> npm install --save-dev cypress-terminal-report
+then this in cypress.config.js
+const installLogsPrinter = require('cypress-terminal-report/src/installLogsPrinter');
+
+and this In cypress/support/e2e.js:
+
+RUn and check again
+
+successfully done.
+
+-----------------------------------------------------------------
+14:40
+In this section we will Run our Test in headless way
+
+1) Use below command for headless test run (it will run and test all the test classes)
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> npx cypress run
+
+Run a single test file
+npx cypress run --spec "cypress/e2e/tests/addToCartTest.cy.js"
+
+2) Run test using script in headless Mode
+
+Goto Package.json file 
+and goto scripts section
+
+Add this
+  "scripts": {  // in script tags add the addToCartHeadless
+    "test:addToCartHeadless":"npx cypress run --spec cypress/e2e/tests/addToCart.cy.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  goto terminal and use above to run
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> npm run test:addToCartHeadless 
+
+Run successfully
+
+
+---------------------------------------------------------------------------------
+22:10
+In this section we will Generate the Html Report for our testacases
+
+1) install cypress-mochawesome-reporter
+
+npm i --save-dev cypress-mochawesome-reporter
+
+2) Change cypress reporter & setup hooks
+
+Edit config file (cypress.config.js by default)
+Add below in e2e section{}
+require('cypress-mochawesome-reporter/plugin')(on);
+
+and
+
+add this above of e2e section
+  reporter: 'cypress-mochawesome-reporter',
+
+e.g
+
+  reporter: 'cypress-mochawesome-reporter',
+  e2e: {
+    setupNodeEvents(on, config) {
+      require('cypress-mochawesome-reporter/plugin')(on);
+    },
+
+
+3) Add to cypress/support/e2e.js
+
+import 'cypress-mochawesome-reporter/register';
+
+
+4) Run the test case and it will automatically generate the report 
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> npm run test:addToCartHeadless
+
+we can add these options to get a recorded video as well
+
+"
+module.exports = defineConfig({
+  video: true,                  // ✅ belongs here, not inside reporterOptions
+  videoUploadOnPasses: true,    // ✅
+  videoCompression: 32,         // ✅
+  reporter: 'cypress-mochawesome-reporter',
+  reporterOptions: {
+    reportDir: 'cypress/reports',
+    charts: true,
+    reportPageTitle: 'My Test Suite',
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    overwrite: false,
+    html: true,
+    json: true,
+    timestamp: 'mmddyyyy_HHMMss',   // custom timestamp format
+    quiet: false,
+    reportFilename: 'my_custom_report',
+    saveAllAttempts: true
+  },
+  e2e: {
+    setupNodeEvents(on, config) {
+      require('cypress-mochawesome-reporter/plugin')(on);
+      return config;
+    }
+  }
+});
+"
+Report Generated successfully
+check here
+C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E\cypress\reports\html\index.html
+
+
+
+
+
+=========================================================================================
+GITHUB Actions
+
+Third video
+
+POM Series || E2E Test using GitHub Actions+Parallel Execution using GitHub Actions
+https://www.youtube.com/watch?v=uqzV6BWaWfw&list=PLUPlX-9QUIrMZsnv69WfCiF15PJUV84Gj&index=4
+
+In this video we will learn about
+
+1. Run Cypress Test on CI/CD using github Actions
+2. Run customized script on CI/CD using github Actions
+3. Run CYPRESS Test on multiple browsers (chrome,firefox) using github Actions
+4. Parallel Execution using GitHub Actions
+
+
+1) Make Directory
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> mkdir .github
+
+Goto to .github Directory
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> cd .github
+
+Make new Directory with name workflow
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E\.github> mkdir workflows
+
+Create new file inside the workflows
+build.yml
+
+Goto the link and copy End-to-End Testing script and paste it inside the build.yml
+https://github.com/cypress-io/github-action
+
+DO it using git bash
+now 
+PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> git add .github/workflows/build.yml
+git  file
+then 
+git push
+
+
+Now goto github and click on Actions

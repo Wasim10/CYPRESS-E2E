@@ -16,7 +16,7 @@ export class registerPage{
       // enter first naem method
 // we are getting URl from e2e file , env 
       OpenUrl(){
-        cy.visit(Cypress.env('URL'))
+        cy.visit(Cypress.env('RegisterURL'))
       }
 
       enterFirstName(FName) {

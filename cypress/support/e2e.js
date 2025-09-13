@@ -15,3 +15,5 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import 'cypress-terminal-report/src/installLogsCollector';
+import 'cypress-mochawesome-reporter/register';
