@@ -4,6 +4,7 @@
   "description": "E2E Cypress",
   "main": "index.js",
   "scripts": {
+    "test:addToCartHeadless": "npx cypress run --spec cypress/e2e/tests/addToCartTest.cy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/Wasim10/CYPRESS-E2E#readme",
   "devDependencies": {
-    "cypress": "^15.2.0"
+    "cypress": "^15.2.0",
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "cypress-terminal-report": "^7.2.1"
   }
 }
