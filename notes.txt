@@ -576,11 +576,29 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Mochawsome Test Report
-          path: path/to/artifact/ # or path/to/artifact
+          path: cypress/reports/  // our report file path
 
 
 
-C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E\cypress\reports\my_custom_report_09132025_215656.html
+
+          push the code and check in github actions
+
+          successfully works! Report Generated
+
+
+2) Above was for single test, lets do for two or more tests like Parallel test
+
+Goto Parallel-test.yml file and paste the below code at end of each test, 
+change the name accordingly
+
+
+      - name: Cypress Test Report  -  For Add to Cart
+        uses: actions/upload-artifact@v4
+        with:
+          name: MochaAwesome Test Report
+          path: cypress/reports/ # or path/to/artifact
+
+
 
 
 
