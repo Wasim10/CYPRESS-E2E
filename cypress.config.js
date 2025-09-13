@@ -33,7 +33,7 @@ module.exports = defineConfig({
   },
 
   env: {
-    RegisterationURL: "https://naveenautomationlabs.com/opencart/index.php?route=account/register",
+    RegisterURL: "https://naveenautomationlabs.com/opencart/index.php?route=account/register",
     LoginURL: "https://naveenautomationlabs.com/opencart/index.php?route=account/login"
   }
 });
