@@ -532,5 +532,58 @@ add this in cypress.config.js under e2e
 git commit -m "Fix Cypress config: add specPattern for CI"
 git push origin main
 
+successfully Run and Done
 
-            
+
+
+
+
+
+=========================================================================================
+            video
+
+            https://www.youtube.com/watch?v=LwEhfks9x1c&list=PLUPlX-9QUIrMZsnv69WfCiF15PJUV84Gj&index=5
+#5 || Cypress E2E Web Automation || Uploading Report Folders to CI/CD
+
+1)
+Goto https://github.com/actions/upload-artifact
+
+copy the below section code and paste it inside the build.yml where ever i required it
+Upload an Entire Directory
+
+- uses: actions/upload-artifact@v4
+  with:
+    name: my-artifact
+    path: path/to/artifact/ # or path/to/artifact
+
+
+    e.g
+
+    name: Regression End-to-end tests
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+ /// here below is our code for test report upload for build.yml
+      - name: Cypress Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mochawsome Test Report
+          path: path/to/artifact/ # or path/to/artifact
+
+
+
+C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E\cypress\reports\my_custom_report_09132025_215656.html
+
+
+
+
+
+
