@@ -409,7 +409,7 @@ In this video we will learn about
 4. Parallel Execution using GitHub Actions
 
 
-1) Make Directory
+1) Run all test cases
 PS C:\Users\Muhammad Usama\Desktop\CYPRESS-E2E> mkdir .github
 
 Goto to .github Directory
@@ -433,3 +433,90 @@ git push
 
 
 Now goto github and click on Actions
+the YML file and its Passed
+
+successfully Passed
+
+
+2) Run Specific Test cases
+Create new yml file inside the .github/workflows
+
+name it script-build.yml
+
+copy the same code from build.yml file and paste it inside the script-build.yml file 
+
+Add this only in End
+    with:
+            command: npm run test:addToCartHeadless
+
+
+Changes implemented.
+Now push them
+a. git status
+b. git add .github/workflows/script-build.yml
+c. git commit -m "Script-Build file added for specfic test run"
+d. git push
+
+
+Goto Actions Tab and click on  "Script-Build file added for specfic test run"
+
+----------------------------------------------------------------------------
+
+3. Run CYPRESS Test on multiple browsers (chrome,firefox) using github Actions
+
+creat a new file inside .github/workflows and name it
+browser-build.yml
+
+paste everything form build.yml and paste inside the browser-build.yml and below code in End
+     with:
+            browser: chrome
+
+
+successfully Run
+
+----------------------------------------------------------------------------------
+
+4. Parallel Execution using GitHub Actions
+
+goto Package.json and add this in scripts{} section
+"test:registerFlow": "npx cypress run --spec cypress/e2e/tests/registerTest.cy.js",
+
+Now
+creat a new file inside workflows
+Parallel-test.yml
+
+add the basic script and change in below
+
+
+e.g like this we are running two tests seprately but Parallely
+
+we  have two jobs we below, we can add multiple
+
+name: E2E Test on multiple browsers
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+            command: npm run test:registerFlow  // this one
+
+  register-flow-run:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+            command: npm run addToCartHeadless       // this one      
+
+            
