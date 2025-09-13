@@ -519,4 +519,18 @@ jobs:
         with:
             command: npm run addToCartHeadless       // this one      
 
+
+
+
+
+add this in cypress.config.js under e2e
+    specPattern: 'cypress/e2e/tests/**/*.cy.{js,ts}', // ✅ explicitly set test path
+
+            push code to git 
+
+            git add cypress.config.js
+git commit -m "Fix Cypress config: add specPattern for CI"
+git push origin main
+
+
             

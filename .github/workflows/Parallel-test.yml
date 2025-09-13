@@ -1,28 +1,25 @@
 name: E2E Test on multiple browsers
 on: push
+
 jobs:
   register-flow-run:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # Install npm dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
+
+      - name: Cypress run for Register Flow
         uses: cypress-io/github-action@v6
         with:
-            command: npm run test:registerFlow
+          command: npm run test:registerFlow
 
-  addTOCart-flow-run:
+  addToCart-flow-run:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # Install npm dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
+
+      - name: Cypress run for Add to Cart Flow
         uses: cypress-io/github-action@v6
         with:
-            command: npm run addToCartHeadless           
-
-            
+          command: npm run test:addToCartHeadless
