@@ -3,7 +3,7 @@ export class homePage {
 
     weblocators = {
 
-        search_input: '.form-control.input-lg',
+        search_input: '.form-control.input-lg1',
         click_search: '.btn.btn-default.btn-lg',
         product: 'img[title="MacBook"]',
         addtocart: 'Add to Cart',

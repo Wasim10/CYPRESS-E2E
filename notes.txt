@@ -599,6 +599,75 @@ change the name accordingly
           path: cypress/reports/ # or path/to/artifact
 
 
+e.g
+
+
+"
+
+name: E2E Test on multiple browsers
+on: push
+
+jobs:
+  register-flow-run:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress run for Register Flow
+        uses: cypress-io/github-action@v6
+        with:
+          command: npm run test:registerFlow
+// Below code added for generate a report for Register flow
+      - name: Cypress Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: MochaAwesome Test Report  - Register Flow Test Report
+          path: cypress/reports/ # or path/to/artifact
+
+  addToCart-flow-run:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress run for Add to Cart Flow
+        uses: cypress-io/github-action@v6
+        with:
+          command: npm run test:addToCartHeadless
+// Below code added for generate report  Add to cart flow
+    
+      - name: Cypress Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: MochaAwesome Test Report  - For Add to Cart Flow Report
+          path: cypress/reports/ # or path/to/artifact
+
+"
+
+
+successfully Generated!!
+
+
+3) Next we will have to generate a report in both cases
+For failed tests
+For Passed tests
+
+Start video form 13:30
+
+add 
+if: always()
+after name:
+
+e.g
+
+    - name: Cypress Test Report
+        if: always()   // i added here
+        uses: actions/upload-artifact@v4
+        with:
+          name: MochaAwesome Test Report
+          path: cypress/reports/ # or path/to/artifact
+
 
 
 
